@@ -39,8 +39,8 @@ const printDesignerDialog = () => {
 				default: frappe.route_options ? frappe.route_options.doctype : null,
 			},
 			{
-				label: __("Print Format Name"),
-				fieldname: "print_format_name",
+				label: __("Print Format ID"),
+				fieldname: "print_format_id",
 				fieldtype: "Data",
 				depends_on: (doc) => doc.action === "Create",
 				mandatory_depends_on: (doc) => doc.action === "Create",
@@ -65,7 +65,7 @@ const printDesignerDialog = () => {
 		],
 		static: true,
 		primary_action_label: __("Edit"),
-		primary_action({ action, doctype, print_format, print_format_name }) {
+		primary_action({ action, doctype, print_format, print_format_id }) {
 			if (action === "Edit") {
 				frappe.set_route("print-designer", print_format);
 			} else if (action === "Create") {
@@ -73,7 +73,7 @@ const printDesignerDialog = () => {
 				frappe.db
 					.insert({
 						doctype: "Print Format",
-						name: print_format_name,
+						id: print_format_id,
 						doc_type: doctype,
 						print_designer: 1,
 						print_designer_header: JSON.stringify([
@@ -110,8 +110,8 @@ const printDesignerDialog = () => {
 					})
 					.then((doc) => {
 						// Incase Route is Same, set_route() is needed to refresh.
-						set_current_doc(doc.name).then(() => {
-							frappe.set_route("print-designer", doc.name);
+						set_current_doc(doc.id).then(() => {
+							frappe.set_route("print-designer", doc.id);
 						});
 					})
 					.finally(() => {
@@ -128,9 +128,9 @@ const printDesignerDialog = () => {
 	return d;
 };
 
-const set_current_doc = async (format_name) => {
+const set_current_doc = async (format_id) => {
 	let currentDoc = null;
-	let doctype = await frappe.db.get_value("Print Format", format_name, "doc_type");
+	let doctype = await frappe.db.get_value("Print Format", format_id, "doc_type");
 	doctype = doctype.message?.doc_type;
 	let route_history = [
 		...frappe.route_history.filter(
@@ -143,17 +143,13 @@ const set_current_doc = async (format_name) => {
 	if (!currentDoc) return;
 	let isdocvalid = await frappe.db.exists(doctype, currentDoc);
 	if (!isdocvalid) return;
-	let settings = await frappe.db.get_value(
-		"Print Format",
-		format_name,
-		"print_designer_settings"
-	);
+	let settings = await frappe.db.get_value("Print Format", format_id, "print_designer_settings");
 	if (!settings.message?.print_designer_settings) return;
 	settings = JSON.parse(settings.message.print_designer_settings);
 	settings["currentDoc"] = currentDoc;
 	await frappe.db.set_value(
 		"Print Format",
-		format_name,
+		format_id,
 		"print_designer_settings",
 		JSON.stringify(settings)
 	);

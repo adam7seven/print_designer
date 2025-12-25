@@ -133,7 +133,7 @@ export const useElementStore = defineStore("ElementStore", {
 									file_url = r.message.file_url;
 									frappe.db.set_value(
 										"Print Format",
-										MainStore.printDesignName,
+										MainStore.printDesignId,
 										"print_designer_preview_img",
 										file_url
 									);
@@ -150,12 +150,12 @@ export const useElementStore = defineStore("ElementStore", {
 
 				let form_data = new FormData();
 				if (file.file_obj) {
-					form_data.append("file", file.file_obj, file.name);
+					form_data.append("file", file.file_obj, file.id);
 				}
 				form_data.append("is_private", 1);
 
 				form_data.append("doctype", "Print Format");
-				form_data.append("docname", MainStore.printDesignName);
+				form_data.append("docid", MainStore.printDesignId);
 
 				form_data.append("fieldname", "print_designer_preview_img");
 
@@ -170,14 +170,14 @@ export const useElementStore = defineStore("ElementStore", {
 			// first delete old preview image
 			const filter = {
 				attached_to_doctype: "Print Format",
-				attached_to_name: MainStore.printDesignName,
+				attached_to_id: MainStore.printDesignId,
 				attached_to_field: "print_designer_preview_img",
 			};
 			// get filename before uploading new file
-			let old_filename = await frappe.db.get_value("File", filter, "name");
-			old_filename = old_filename.message.name;
-			if (old_filename) {
-				frappe.db.delete_doc("File", old_filename);
+			let old_fileid = await frappe.db.get_value("File", filter, "id");
+			old_fileid = old_fileid.message.id;
+			if (old_fileid) {
+				frappe.db.delete_doc("File", old_fileid);
 			}
 
 			const options = {
@@ -200,13 +200,13 @@ export const useElementStore = defineStore("ElementStore", {
 			preview_canvas.toBlob(async (blob) => {
 				const file = new File(
 					[blob],
-					`print_designer-${frappe.scrub(MainStore.printDesignName)}-preview.jpg`,
+					`print_designer-${frappe.scrub(MainStore.printDesignId)}-preview.jpg`,
 					{ type: "image/jpeg" }
 				);
 				const file_data = {
 					file_obj: file,
 					optimize: 1,
-					name: file.name,
+					id: file.id,
 					private: true,
 				};
 				await this.upload_file(file_data);
@@ -217,7 +217,7 @@ export const useElementStore = defineStore("ElementStore", {
 			if (this.checkIfAnyTableIsEmpty()) return;
 			let is_standard = await frappe.db.get_value(
 				"Print Format",
-				MainStore.printDesignName,
+				MainStore.printDesignId,
 				"standard"
 			);
 			MainStore.is_standard = is_standard.message.standard == "Yes";
@@ -260,7 +260,7 @@ export const useElementStore = defineStore("ElementStore", {
 			if (MainStore.isOlderSchema("1.3.0")) {
 				await this.printFormatCopyOnOlderSchema(objectToSave);
 			} else {
-				await frappe.db.set_value("Print Format", MainStore.printDesignName, objectToSave);
+				await frappe.db.set_value("Print Format", MainStore.printDesignId, objectToSave);
 				frappe.show_alert(
 					{
 						message: `Print Format Saved Successfully`,
@@ -980,7 +980,9 @@ export const useElementStore = defineStore("ElementStore", {
 			if (
 				(childElements.length == 1 && childElements[0].style.breakInside == "avoid") ||
 				childElements.some(
-					(el) => ["row", "column"].includes(el.layoutType) && el.style.breakInside == "avoid"
+					(el) =>
+						["row", "column"].includes(el.layoutType) &&
+						el.style.breakInside == "avoid"
 				)
 			) {
 				wrapper.breakInside = "avoid";
@@ -1022,15 +1024,15 @@ export const useElementStore = defineStore("ElementStore", {
 			for (let i = 0; i < 100; i++) {
 				const pf_exists = await frappe.db.exists(
 					"Print Format",
-					MainStore.printDesignName + " ( Copy " + (i ? i : "") + " )"
+					MainStore.printDesignId + " ( Copy " + (i ? i : "") + " )"
 				);
 				if (pf_exists) continue;
 				nextFormatCopyNumber = i;
 				break;
 			}
 			// This is just default value for the new print format name
-			const print_format_name =
-				MainStore.printDesignName +
+			const print_format_id =
+				MainStore.printDesignId +
 				" ( Copy " +
 				(nextFormatCopyNumber ? nextFormatCopyNumber : "") +
 				" )";
@@ -1039,11 +1041,11 @@ export const useElementStore = defineStore("ElementStore", {
 				title: "New Print Format",
 				fields: [
 					{
-						label: "Name",
-						fieldname: "print_format_name",
+						label: "ID",
+						fieldname: "print_format_id",
 						fieldtype: "Data",
 						reqd: 1,
-						default: print_format_name,
+						default: print_format_id,
 					},
 				],
 				size: "small",
@@ -1053,7 +1055,7 @@ export const useElementStore = defineStore("ElementStore", {
 					try {
 						await frappe.db.insert({
 							doctype: "Print Format",
-							name: values.print_format_name,
+							id: values.print_format_id,
 							doc_type: MainStore.doctype,
 							print_designer: 1,
 							print_designer_header: objectToSave.print_designer_header,
@@ -1064,7 +1066,7 @@ export const useElementStore = defineStore("ElementStore", {
 							print_designer_settings: objectToSave.print_designer_settings,
 						});
 						d.hide();
-						frappe.set_route("print-designer", values.print_format_name);
+						frappe.set_route("print-designer", values.print_format_id);
 					} catch (error) {
 						console.error(error);
 					}
@@ -1234,9 +1236,9 @@ export const useElementStore = defineStore("ElementStore", {
 				DOMRef: null,
 			};
 		},
-		async loadElements(printDesignName) {
+		async loadElements(printDesignId) {
 			frappe.dom.freeze(__("Loading Print Format"));
-			const printFormat = await frappe.db.get_value("Print Format", printDesignName, [
+			const printFormat = await frappe.db.get_value("Print Format", printDesignId, [
 				"print_designer_header",
 				"print_designer_body",
 				"print_designer_after_table",
@@ -1246,10 +1248,22 @@ export const useElementStore = defineStore("ElementStore", {
 			let settings = JSON.parse(printFormat.message.print_designer_settings);
 			this.loadSettings(settings);
 
-			let ElementsBody = JSON.parse(printFormat.message.print_designer_body);
-			let ElementsAfterTable = JSON.parse(printFormat.message.print_designer_after_table);
-			const headers = JSON.parse(printFormat.message.print_designer_header);
-			const footers = JSON.parse(printFormat.message.print_designer_footer);
+			let ElementsBody =
+				typeof printFormat.message.print_designer_body === "string"
+					? JSON.parse(printFormat.message.print_designer_body)
+					: printFormat.message.print_designer_body;
+			let ElementsAfterTable =
+				typeof printFormat.message.print_designer_after_table === "string"
+					? JSON.parse(printFormat.message.print_designer_after_table)
+					: printFormat.message.print_designer_after_table;
+			const headers =
+				typeof printFormat.message.print_designer_header === "string"
+					? JSON.parse(printFormat.message.print_designer_header)
+					: printFormat.message.print_designer_header;
+			const footers =
+				typeof printFormat.message.print_designer_footer === "string"
+					? JSON.parse(printFormat.message.print_designer_footer)
+					: printFormat.message.print_designer_footer;
 			headers.forEach((header) => {
 				this.Headers.push(header);
 			});

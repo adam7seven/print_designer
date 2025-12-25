@@ -3,7 +3,7 @@ import { useMainStore } from "./MainStore";
 import { useElementStore } from "./ElementStore";
 export const fetchMeta = async () => {
 	const MainStore = useMainStore();
-	MainStore.doctype = await getValue("Print Format", MainStore.printDesignName, "doc_type");
+	MainStore.doctype = await getValue("Print Format", MainStore.printDesignId, "doc_type");
 	MainStore.rawMeta = await frappe.xcall(
 		"print_designer.print_designer.page.print_designer.print_designer.get_meta",
 		{ doctype: MainStore.doctype }
@@ -78,8 +78,8 @@ export const getMeta = async (doctype, parentField) => {
 	parentMetaField["childfields"] = fields;
 	return fields;
 };
-export const getValue = async (doctype, name, fieldname) => {
-	const result = await frappe.db.get_value(doctype, name, fieldname);
+export const getValue = async (doctype, id, fieldname) => {
+	const result = await frappe.db.get_value(doctype, id, fieldname);
 
 	const value = await result.message[fieldname];
 	return value;
@@ -90,15 +90,15 @@ export const fetchDoc = async (id = null) => {
 	const ElementStore = useElementStore();
 	let doctype = MainStore.doctype;
 	let doc;
-	await ElementStore.loadElements(MainStore.printDesignName);
+	await ElementStore.loadElements(MainStore.printDesignId);
 	if (MainStore.currentDoc == null) {
 		if (!id) {
 			let latestdoc = await frappe.db.get_list(doctype, {
-				fields: ["name"],
+				fields: ["id"],
 				order_by: "modified desc",
 				limit: 1,
 			});
-			MainStore.currentDoc = latestdoc[0]?.name;
+			MainStore.currentDoc = latestdoc[0]?.id;
 		} else {
 			MainStore.currentDoc = id;
 		}
@@ -117,7 +117,7 @@ export const fetchDoc = async (id = null) => {
 			Object.keys(doc).forEach((element) => {
 				if (
 					!MainStore.metaFields.find((o) => o.fieldname == element) &&
-					["name"].indexOf(element) == -1
+					["id"].indexOf(element) == -1
 				) {
 					delete doc[element];
 				}

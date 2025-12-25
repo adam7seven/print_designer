@@ -4,11 +4,9 @@
     <img src="https://github.com/frappe/print_designer/blob/develop/print_designer/public/images/print-designer-logo.svg" height="80" alt="Print Designer Logo">
 </a>
 
-
 <h1>Print Designer</h1>
 
 **Frappe app to design print formats using interactive UI.**
-
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/frappe/print_designer)
 
@@ -20,12 +18,12 @@
 </div>
 
 [Website](https://frappe.io/print-designer) - [Documentation](https://docs.frappe.io/print-designer)
+
 </div>
 
 ## Print Designer
 
 Print Designer is an open-source designing tool that allows businesses to create dynamic and professional-looking print formats. If you are looking to design print formats that enhance your brand image and streamline operational efficiency, then give it a try.
-
 
 ### Motivation
 
@@ -45,7 +43,6 @@ As everything at Frappe follows a UI-first approach, why not have a way to desig
 
 - [Frappe Framework](https://github.com/frappe/frappe): A full-stack web application framework.
 
-
 ## Getting Started (Production)
 
 > **Warning**
@@ -55,6 +52,7 @@ As everything at Frappe follows a UI-first approach, why not have a way to desig
 ### Managed Hosting
 
 Get started with your personal or business site with a few clicks on Frappe Cloud - our official hosting service.
+
 <div>
 	<a href="https://frappecloud.com/marketplace/apps/print_designer" target="_blank">
 		<picture>
@@ -63,7 +61,6 @@ Get started with your personal or business site with a few clicks on Frappe Clou
 		</picture>
 	</a>
 </div>
-
 
 ### Self Hosting
 
@@ -88,6 +85,7 @@ python3 ./easy-install.py deploy \
 ```
 
 Replace the following parameters with your values:
+
 - `email@example.com`: Your email address
 - `subdomain.domain.tld`: Your domain name where print designer will be hosted
 
@@ -126,36 +124,39 @@ Password: `admin`
 1. [Setup Bench](https://docs.frappe.io/framework/user/en/installation).
 1. In the frappe-bench directory, run `bench start` and keep it running.
 1. Open a new terminal session and cd into `frappe-bench` directory and run following commands:
+
 ```bash
 bench get-app print_designer
 bench new-site print-designer.localhost --install-app print_designer
 bench browse print-designer.localhost --user Administrator
 ```
+
 1. Access the print designer page at `print-designer.localhost:8000/app/print-designer` in your web browser.
 
-
 ## FAQ
+
 1. Incorrect PDF Page Size
 
-    - Frappe / Print Designer requires at least  [version 0.12.5 with patched qt](https://frappeframework.com/docs/v14/user/en/installation#pre-requisites)
+   - Frappe / Print Designer requires at least [version 0.12.5 with patched qt](https://frappeframework.com/docs/v14/user/en/installation#pre-requisites)
 
-    - Install correct version by following [installation guide](https://frappeframework.com/docs/v14/user/en/installation) and confirm : 
+   - Install correct version by following [installation guide](https://frappeframework.com/docs/v14/user/en/installation) and confirm :
 
-    ```
-    wkhtmltopdf --version
-    ```
-    - output should be similar to `wkhtmltopdf 0.12.6 (with patched qt)`
+   ```
+   wkhtmltopdf --version
+   ```
 
+   - output should be similar to `wkhtmltopdf 0.12.6 (with patched qt)`
 
 2. Mac Installation Error
-    - If error has `npm ERR! node-pre-gyp WARN Pre-built binaries not found for canvas@x.x.x` it means that there aren't any pre-built binaries for your system so it will try to compile them and in order to do that you need 
-    - Xcode Command Line Tools `xcode-select --install`
-    - [HomeBrew](https://brew.sh/) and `brew install pkg-config cairo pango libpng jpeg giflib librsvg pixman`
-    - If you have **xcode 10.0 or higher** installed, in order to build from source you need **NPM 6.4.1 or higher** `npm install -g npm@latest`.
+
+   - If error has `npm ERR! node-pre-gyp WARN Pre-built binaries not found for canvas@x.x.x` it means that there aren't any pre-built binaries for your system so it will try to compile them and in order to do that you need
+   - Xcode Command Line Tools `xcode-select --install`
+   - [HomeBrew](https://brew.sh/) and `brew install pkg-config cairo pango libpng jpeg giflib librsvg pixman`
+   - If you have **xcode 10.0 or higher** installed, in order to build from source you need **NPM 6.4.1 or higher** `npm install -g npm@latest`.
 
 3. Linux ARM CPU Installation Error
-    - If error has `node-pre-gyp WARN Pre-built binaries not installable for canvas@x.x.x and node@x.x.x` it means that there aren't any pre-built binaries for your system so it will try to compile them
-    - In order to do that you need `sudo apt-get update && sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev`
+   - If error has `node-pre-gyp WARN Pre-built binaries not installable for canvas@x.x.x and node@x.x.x` it means that there aren't any pre-built binaries for your system so it will try to compile them
+   - In order to do that you need `sudo apt-get update && sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev`
 
 <br>
 
@@ -164,7 +165,6 @@ bench browse print-designer.localhost --user Administrator
 - [Telegram Public Group](https://t.me/+beFRbDSDEgtjYmY9)
 - [Discuss Forum](https://discuss.frappe.io/c/print-designer/84)
 - [Documentation](https://docs.frappe.io/print_designer)
-
 
 <br>
 <div align="center">

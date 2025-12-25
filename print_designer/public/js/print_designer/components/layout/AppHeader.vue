@@ -56,32 +56,32 @@ const handleCLick = (e) => {
 
 const editNameOnBlur = (e) => {
 	contenteditable.value = false;
-	const new_name = e.target.innerText.trim();
+	const new_id = e.target.innerText.trim();
 	const doctype = "Print Format";
-	const docname = MainStore.printDesignName;
-	if (new_name === "" || new_name === docname) {
-		e.target.innerText = docname;
+	const docid = MainStore.printDesignId;
+	if (new_id === "" || new_id === docid) {
+		e.target.innerText = docid;
 		return;
 	}
-	if (new_name === docname) return;
+	if (new_id === docid) return;
 
 	const callback = (r, rt) => {
 		if (!r.exc) {
-			$(document).trigger("rename", [doctype, docname, r.message || new_name]);
-			if (locals[doctype] && locals[doctype][docname]) delete locals[doctype][docname];
+			$(document).trigger("rename", [doctype, docid, r.message || new_id]);
+			if (locals[doctype] && locals[doctype][docid]) delete locals[doctype][docid];
 			frappe.set_route();
-			frappe.set_route("print-designer", new_name);
+			frappe.set_route("print-designer", new_id);
 		}
 	};
 
 	frappe.call({
 		method: "frappe.rename_doc",
 		freeze: true,
-		freeze_message: "Renaming Format Name...",
+		freeze_message: "Renaming Format Id...",
 		args: {
 			doctype: doctype,
-			old: docname,
-			new: new_name,
+			old: docid,
+			new: new_id,
 			merge: false,
 		},
 		callback: callback,
@@ -149,10 +149,12 @@ const goToLastPage = () => {
 	[contenteditable] {
 		outline: none;
 		padding: 6px 8px;
+
 		&:hover {
 			padding-bottom: 5px;
 			border-bottom: 1px solid #d5c291;
 		}
+
 		&:focus {
 			border-bottom: 1px solid var(--primary);
 			padding-bottom: 5px;

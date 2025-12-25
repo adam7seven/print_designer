@@ -148,6 +148,7 @@ const columnDragging = ref(true);
 const draggableEl = ref(-1);
 const menu = ref(null);
 
+console.log(props.object);
 const {
 	id,
 	table,

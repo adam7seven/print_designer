@@ -101,6 +101,7 @@ import AppDynamicTextModal from "./AppDynamicTextModal.vue";
 import AppUserProvidedJinjaModal from "./AppUserProvidedJinjaModal.vue";
 import AppBarcodeModal from "./AppBarcodeModal.vue";
 import AppImageModal from "./AppImageModal.vue";
+import AppPreviewPdf from "./AppPreviewPdf.vue";
 import IconsUse from "../../icons/IconsUse.vue";
 import { watch, watchEffect, onMounted, ref, nextTick } from "vue";
 import { useMainStore } from "../../store/MainStore";
@@ -468,7 +469,7 @@ watch(
 			args: {
 				string: MainStore.userProvidedJinja,
 				doctype: MainStore.doctype,
-				docname: MainStore.currentDoc,
+				docid: MainStore.currentDoc,
 				settings: {},
 			},
 		});
@@ -491,25 +492,30 @@ watch(
 	z-index: 1000 !important;
 	outline: 1px solid var(--primary) !important;
 }
+
 .inHeaderFooter {
 	outline: 1px solid var(--primary) !important;
 	outline-offset: -1px;
 }
+
 .overlappingHeaderFooter {
 	outline: 1px solid var(--danger) !important;
 	outline-offset: -1px;
 }
+
 .selection {
 	border: 1px solid var(--primary);
 	background-color: rgba(196, 183, 150, 0.1);
 	position: absolute;
 }
+
 .canvas {
 	display: block;
 	z-index: 0;
 	position: relative;
 	flex: 1;
 }
+
 .page-btn-wrapper {
 	display: flex;
 	gap: 10px;
@@ -522,16 +528,19 @@ watch(
 		font-size: var(--weight-regular);
 		margin-bottom: var(--margin-2xl);
 	}
+
 	.btn-primary {
 		background-color: var(--btn-primary);
 	}
 }
+
 .relative-row {
 	background-color: transparent !important;
 	border: none !important;
 	z-index: 9999 !important;
 	outline: 1px double var(--primary) !important;
 }
+
 .relative-column {
 	background-color: transparent !important;
 	outline: 1px double var(--primary) !important;

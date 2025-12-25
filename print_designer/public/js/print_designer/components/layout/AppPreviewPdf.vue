@@ -15,15 +15,15 @@ const pdfjsLibRef = shallowRef(null);
 const pdfDocumentTask = shallowRef(null);
 
 const removePdfWatcher = watch(
-	() => [pdfjsLibRef.value, MainStore.doctype, MainStore.printDesignName],
+	() => [pdfjsLibRef.value, MainStore.doctype, MainStore.printDesignId],
 	async () => {
 		let pdfjsLib = pdfjsLibRef.value;
-		if (pdfjsLib && MainStore.doctype && MainStore.printDesignName) {
+		if (pdfjsLib && MainStore.doctype && MainStore.printDesignId) {
 			console.time("PdfStart");
 			let url = `/api/method/frappe.utils.print_format.download_pdf?doctype=${encodeURIComponent(
 				MainStore.doctype
-			)}&name=${encodeURIComponent(MainStore.currentDoc)}&format=${encodeURIComponent(
-				MainStore.printDesignName
+			)}&id=${encodeURIComponent(MainStore.currentDoc)}&format=${encodeURIComponent(
+				MainStore.printDesignId
 			)}&no_letterhead=1`;
 
 			/**

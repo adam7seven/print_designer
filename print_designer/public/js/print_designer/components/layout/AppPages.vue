@@ -85,6 +85,7 @@ const { setElements } = useElement({
 	resizable: false,
 });
 
+console.log("app page", props.page);
 const isComponent = Object.freeze({
 	rectangle: BaseRectangle,
 	text: {

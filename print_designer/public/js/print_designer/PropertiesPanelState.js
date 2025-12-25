@@ -306,6 +306,7 @@ export const createPropertiesPanel = () => {
 			],
 		],
 	});
+	debugger;
 	MainStore.propertiesPanel.push({
 		title: "Page Settings",
 		sectionCondtional: () =>
@@ -1421,52 +1422,51 @@ export const createPropertiesPanel = () => {
 				return false;
 			}
 			const currentEl = MainStore.getCurrentElementsValues[0];
-			if (!currentEl || currentEl.parent?.type !== "page" || !getParentPage(currentEl)?.childrens) {
+			if (
+				!currentEl ||
+				currentEl.parent?.type !== "page" ||
+				!getParentPage(currentEl)?.childrens
+			) {
 				return false;
 			}
-			if (
-				ElementStore.isElementOverlapping(
-					currentEl,
-					getParentPage(currentEl).childrens
-				)
-			) {
+			if (ElementStore.isElementOverlapping(currentEl, getParentPage(currentEl).childrens)) {
 				return false;
 			}
 			return true;
 		},
 		fields: [
-				{
-					label: "Avoid Page Break",
-					name: "breakInside",
-					isLabelled: true,
-					labelDirection: "column",
-					condtional: null,
-					parentBorderBottom: true,
-					parentBorderTop: true,
-					frappeControl: (ref, name) => {
-						const MainStore = useMainStore();
-						makeFeild({
-							name: name,
-							ref: ref,
-							fieldtype: "Select",
-							requiredData: [MainStore.getCurrentElementsValues[0]],
-							options: () => [
-								{ label: "Yes", value: "avoid" },
-								{ label: "No", value: "auto" },
-							],
-							reactiveObject: () => MainStore.getCurrentElementsValues[0],
-							propertyName: "breakInside",
-							isStyle: true,
-							isFontStyle: false,
-							formatValue: (object, property, isStyle) => {
-								if (object && object[property]) {
-									return object[property];
-								}
-								return "auto";
-							},
-						});
-					},
+			{
+				label: "Avoid Page Break",
+				name: "breakInside",
+				isLabelled: true,
+				labelDirection: "column",
+				condtional: null,
+				parentBorderBottom: true,
+				parentBorderTop: true,
+				frappeControl: (ref, name) => {
+					const MainStore = useMainStore();
+					makeFeild({
+						name: name,
+						ref: ref,
+						fieldtype: "Select",
+						requiredData: [MainStore.getCurrentElementsValues[0]],
+						options: () => [
+							{ label: "Yes", value: "avoid" },
+							{ label: "No", value: "auto" },
+						],
+						reactiveObject: () => MainStore.getCurrentElementsValues[0],
+						propertyName: "breakInside",
+						isStyle: true,
+						isFontStyle: false,
+						formatValue: (object, property, isStyle) => {
+							if (object && object[property]) {
+								return object[property];
+							}
+							return "auto";
+						},
+					});
 				},
+			},
 		],
 	});
 	MainStore.propertiesPanel.push({

@@ -93,7 +93,7 @@ const parseJinja = async () => {
 			args: {
 				string: value.value,
 				doctype: MainStore.doctype,
-				docname: MainStore.currentDoc,
+				docid: MainStore.currentDoc,
 				send_to_jinja: MainStore.mainParsedJinjaData || {},
 			},
 		});
@@ -247,6 +247,7 @@ const handleDblClick = (e, element) => {
 	align-items: center;
 	justify-content: center;
 	background-color: var(--subtle-fg);
+
 	.content {
 		display: flex;
 		flex-direction: column;

@@ -80,7 +80,7 @@
 		<div class="icons">
 			<div @click="addStaticText">
 				<em style="font-weight: 900">T</em>
-				<sub style="font-weight: 600; font-size: 1em bottom:-0.15em">+</sub>
+				<sub style="font-weight: 600; font-size: 1em; bottom: -0.15em">+</sub>
 				<span style="font-size: 12px; padding: 0px 5px">Add Text</span>
 			</div>
 			<div
@@ -396,6 +396,7 @@ const deleteField = (ev) => {
 		.label-text {
 			padding: 6px 1px;
 			margin: 0px 3px;
+
 			&:hover,
 			&.label-text-selected {
 				border: 1px solid var(--gray-900);
@@ -415,6 +416,7 @@ const deleteField = (ev) => {
 		.preview-text {
 			padding: 0;
 			padding-left: 2px;
+
 			&:hover,
 			&.preview-text-selected {
 				color: var(--dark);
@@ -428,10 +430,12 @@ const deleteField = (ev) => {
 		}
 	}
 }
+
 .footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+
 	.icons {
 		display: flex;
 		flex: 1;
@@ -445,13 +449,16 @@ const deleteField = (ev) => {
 			font-weight: 500;
 			padding: 0px 10px;
 			border-left: 1px solid var(--gray-300);
+
 			&:first-child {
 				padding-left: 0px;
 				border-left: 0px;
 			}
+
 			cursor: pointer;
 		}
 	}
+
 	.deleteIcon {
 		display: flex;
 		flex: 1;

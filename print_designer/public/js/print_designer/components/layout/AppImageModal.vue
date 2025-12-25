@@ -192,7 +192,7 @@ const refFrappeControl = (ref) => {
 onMounted(async () => {
 	if (props.openImageModal) {
 		let result = await frappe.db.get_list("File", {
-			fields: ["name", "file_name", "file_url", "modified"],
+			fields: ["id", "file_name", "file_url", "modified"],
 			filters: { is_folder: false },
 			order_by: "modified desc",
 			limit: 20,
@@ -253,7 +253,7 @@ const get_modified_date = (file) => {
 const searchFile = async () => {
 	if (search_text.value === "" || search_text.value.length < 3) {
 		let result = await frappe.db.get_list("File", {
-			fields: ["name", "file_name", "file_url", "modified"],
+			fields: ["id", "file_name", "file_url", "modified"],
 			filters: { is_folder: false },
 			order_by: "modified desc",
 			limit: 20,
@@ -289,21 +289,26 @@ const size = {
 	padding: 0;
 	background-color: var(--fg-color);
 }
+
 .modal-body::-webkit-scrollbar {
 	width: 5px;
 	height: 5px;
 }
+
 .modal-body::-webkit-scrollbar-thumb {
 	background: "var(--gray-200)";
 	border-radius: 6px;
 }
+
 .modal-body::-webkit-scrollbar-track,
 .modal-body::-webkit-scrollbar-corner {
 	background: var(--fg-color);
 }
+
 .icon-show {
 	display: none;
 }
+
 .image-filter {
 	display: flex;
 	justify-content: space-around;
@@ -314,6 +319,7 @@ const size = {
 		margin-right: 1rem;
 	}
 }
+
 .image-file-grid {
 	padding: var(--padding-sm);
 	display: grid;
@@ -348,21 +354,25 @@ const size = {
 				display: flex;
 				width: 100%;
 				min-width: 100%;
+
 				img {
 					object-fit: contain;
 				}
 			}
 		}
+
 		.file-footer {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
 			padding: var(--padding-sm);
 			background-color: var(--fg-color);
+
 			.file-title {
 				font-size: var(--text-md);
 				font-weight: 500;
 			}
+
 			.file-modified {
 				font-size: var(--text-xs);
 				word-wrap: break-word;
@@ -370,11 +380,13 @@ const size = {
 			}
 		}
 	}
+
 	.file-wrapper:hover {
 		img {
 			filter: opacity(75%);
 		}
 	}
+
 	.selected-image {
 		border: 1px solid var(--primary);
 		border-radius: var(--border-radius);
@@ -386,6 +398,7 @@ const size = {
 		}
 	}
 }
+
 .fallback-image {
 	width: 100%;
 	user-select: none;
@@ -395,6 +408,7 @@ const size = {
 	align-items: center;
 	justify-content: center;
 	background-color: var(--subtle-fg);
+
 	.content {
 		display: flex;
 		flex-direction: column;
@@ -416,9 +430,11 @@ const size = {
 	background-color: var(--gray-50);
 	border-radius: var(--border-radius);
 	width: 97%;
+
 	form {
 		display: flex;
 		align-items: end;
+
 		button {
 			margin-left: 10px;
 		}

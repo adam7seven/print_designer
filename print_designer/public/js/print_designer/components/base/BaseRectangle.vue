@@ -74,6 +74,7 @@ const props = defineProps({
 		required: true,
 	},
 });
+console.log("base rectangle", props.object);
 const isComponent = Object.freeze({
 	rectangle: "BaseRectangle",
 	text: {

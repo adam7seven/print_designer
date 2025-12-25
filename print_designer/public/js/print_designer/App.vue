@@ -1,42 +1,14 @@
 <template>
 	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link
-		v-for="currentFont in MainStore.currentFonts"
-		:key="currentFont"
+	<link v-for="currentFont in MainStore.currentFonts" :key="currentFont"
 		:href="`https://fonts.googleapis.com/css2?family=${currentFont}:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap`"
-		rel="stylesheet"
-	/>
-	<link
-		rel="preload"
-		href="/assets/print_designer/images/mouse-pointer.svg"
-		as="image"
-		type="image/svg+xml"
-	/>
-	<link
-		rel="preload"
-		href="/assets/print_designer/images/add-text.svg"
-		as="image"
-		type="image/svg+xml"
-	/>
-	<link
-		rel="preload"
-		href="/assets/print_designer/images/add-image.svg"
-		as="image"
-		type="image/svg+xml"
-	/>
-	<link
-		rel="preload"
-		href="/assets/print_designer/images/add-table.svg"
-		as="image"
-		type="image/svg+xml"
-	/>
-	<link
-		rel="preload"
-		href="/assets/print_designer/images/add-rectangle.svg"
-		as="image"
-		type="image/svg+xml"
-	/>
-	<AppHeader :print_format_name="print_format_name" />
+		rel="stylesheet" />
+	<link rel="preload" href="/assets/print_designer/images/mouse-pointer.svg" as="image" type="image/svg+xml" />
+	<link rel="preload" href="/assets/print_designer/images/add-text.svg" as="image" type="image/svg+xml" />
+	<link rel="preload" href="/assets/print_designer/images/add-image.svg" as="image" type="image/svg+xml" />
+	<link rel="preload" href="/assets/print_designer/images/add-table.svg" as="image" type="image/svg+xml" />
+	<link rel="preload" href="/assets/print_designer/images/add-rectangle.svg" as="image" type="image/svg+xml" />
+	<AppHeader :print_format_id="print_format_id" />
 	<div class="main-layout" id="main-layout">
 		<AppToolbar :class="toolbarClasses" />
 		<AppCanvas class="app-sections print-format-container" />
@@ -55,7 +27,7 @@ import { useAttachKeyBindings } from "./composables/AttachKeyBindings";
 import { fetchMeta } from "./store/fetchMetaAndData";
 
 const props = defineProps({
-	print_format_name: {
+	print_format_id: {
 		type: String,
 		required: true,
 	},
@@ -72,7 +44,7 @@ const toolbarClasses = computed(() => {
 
 useAttachKeyBindings();
 onMounted(() => {
-	MainStore.printDesignName = props.print_format_name;
+	MainStore.printDesignId = props.print_format_id;
 	fetchMeta();
 	const screen_stylesheet = document.createElement("style");
 	screen_stylesheet.title = "print-designer-stylesheet";
@@ -113,6 +85,7 @@ watchEffect(() => {
 	cursor: default;
 	--primary: #7b4b57;
 	--primary-color: #7b4b57;
+
 	.app-sections {
 		flex: 1;
 		height: calc(100vh - var(--navbar-height));
@@ -127,11 +100,13 @@ watchEffect(() => {
 		width: 44px;
 		max-width: 44px;
 	}
+
 	.toolbar-with-layer-panel {
 		width: 244px;
 		max-width: 244px;
 		box-shadow: unset;
 	}
+
 	.print-format-container {
 		overflow: auto;
 		display: flex;
@@ -140,6 +115,7 @@ watchEffect(() => {
 		height: calc(100vh - var(--navbar-height));
 		background-color: var(--subtle-fg);
 	}
+
 	.properties-panel {
 		width: 250px;
 		max-width: 250px;

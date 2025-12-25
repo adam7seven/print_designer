@@ -77,7 +77,7 @@ export const useMainStore = defineStore("MainStore", {
 		toolbarWidth: 44,
 		currentElements: {},
 		globalStyles,
-		printDesignName: "",
+		printDesignId: "",
 		isLayerPanelEnabled: false,
 		page: {
 			height: 1122.519685,
@@ -308,13 +308,13 @@ export const useMainStore = defineStore("MainStore", {
 				} else if (
 					typeof search_string != "string" ||
 					!search_string.length ||
-					"Name".toLowerCase().includes(search_string.toLowerCase())
+					"Id".toLowerCase().includes(search_string.toLowerCase())
 				) {
 					fields["Document"] = [
 						{
-							fieldname: "name",
+							fieldname: "id",
 							fieldtype: "Small Text",
-							label: "Name",
+							label: "Id",
 							options: undefined,
 						},
 					];
@@ -526,8 +526,8 @@ export const useMainStore = defineStore("MainStore", {
 			this.activeControl = control.id;
 			this.cursor = control.cursor;
 		},
-		setPrintDesignName(name) {
-			this.printDesignName = name;
+		setprintDesignId(id) {
+			this.printDesignId = id;
 		},
 		/**
 		 * @param {Array} rules Accepts an array of JSON-encoded declarations

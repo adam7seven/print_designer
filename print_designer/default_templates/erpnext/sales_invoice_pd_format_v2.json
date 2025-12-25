@@ -18,7 +18,7 @@
  "modified": "2024-09-30 12:47:23.830939",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Sales Invoice PD Format v2",
+ "id": "Sales Invoice PD Format v2",
  "owner": "Administrator",
  "page_number": "Hide",
  "print_designer": 1,

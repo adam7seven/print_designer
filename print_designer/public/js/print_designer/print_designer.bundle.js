@@ -5,7 +5,7 @@ class PrintDesigner {
 	constructor({ wrapper, print_format }) {
 		this.$wrapper = $(wrapper);
 		this.print_format = print_format;
-		const app = createApp(Designer, { print_format_name: this.print_format });
+		const app = createApp(Designer, { print_format_id: this.print_format });
 		app.use(createPinia());
 		SetVueGlobals(app);
 		app.mount(this.$wrapper.get(0));

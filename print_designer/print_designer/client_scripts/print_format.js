@@ -22,11 +22,11 @@ frappe.ui.form.on("Print Format", {
 						return;
 					}
 					if (frm.doc.print_format_builder_beta) {
-						frappe.set_route("print-format-builder-beta", frm.doc.name);
+						frappe.set_route("print-format-builder-beta", frm.doc.id);
 					} else if (frm.doc.print_designer) {
-						frappe.set_route("print-designer", frm.doc.name);
+						frappe.set_route("print-designer", frm.doc.id);
 					} else {
-						frappe.set_route("print-format-builder", frm.doc.name);
+						frappe.set_route("print-format-builder", frm.doc.id);
 					}
 				});
 			} else if (frm.doc.custom_format && !frm.doc.raw_printing) {
@@ -35,7 +35,7 @@ frappe.ui.form.on("Print Format", {
 			if (frappe.model.can_write("Customize Form")) {
 				frappe.model.with_doctype(frm.doc.doc_type, function () {
 					let current_format = frappe.get_meta(frm.doc.DocType)?.default_print_format;
-					if (current_format == frm.doc.name) {
+					if (current_format == frm.doc.id) {
 						return;
 					}
 
@@ -43,7 +43,7 @@ frappe.ui.form.on("Print Format", {
 						frappe.call({
 							method: "frappe.printing.doctype.print_format.print_format.make_default",
 							args: {
-								name: frm.doc.name,
+								id: frm.doc.id,
 							},
 							callback: function () {
 								frm.refresh();

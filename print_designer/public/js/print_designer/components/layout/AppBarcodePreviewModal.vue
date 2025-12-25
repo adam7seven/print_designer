@@ -70,7 +70,7 @@
 		<div class="icons">
 			<div @click="addStaticText" v-if="!fieldnames[0]?.is_static">
 				<em style="font-weight: 900">T</em>
-				<sub style="font-weight: 600; font-size: 1em bottom:-0.15em">+</sub>
+				<sub style="font-weight: 600; font-size: 1em; bottom: -0.15em">+</sub>
 				<span style="font-size: 12px; padding: 0px 5px">Static Text</span>
 			</div>
 			<div
@@ -162,7 +162,7 @@ const parseJinja = async () => {
 			args: {
 				string: value,
 				doctype: MainStore.doctype,
-				docname: MainStore.currentDoc,
+				docid: MainStore.currentDoc,
 				send_to_jinja: MainStore.mainParsedJinjaData || {},
 			},
 		});
@@ -315,6 +315,7 @@ const addStaticText = (event) => {
 	overflow: auto;
 	margin-top: 15px;
 	padding-top: 10px;
+
 	.settings {
 		flex: 50%;
 	}
@@ -338,6 +339,7 @@ const addStaticText = (event) => {
 		.label-text {
 			padding: 6px 1px;
 			margin: 0px 3px;
+
 			&:hover,
 			&.label-text-selected {
 				border: 1px solid var(--gray-900);
@@ -357,6 +359,7 @@ const addStaticText = (event) => {
 		.preview-text {
 			padding: 0;
 			padding-left: 2px;
+
 			&:hover,
 			&.preview-text-selected {
 				color: var(--dark);
@@ -369,10 +372,12 @@ const addStaticText = (event) => {
 		}
 	}
 }
+
 .footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+
 	.icons {
 		display: flex;
 		flex: 1;
@@ -386,12 +391,14 @@ const addStaticText = (event) => {
 			font-weight: 500;
 			padding: 0px 10px;
 			border-left: 1px solid var(--gray-300);
+
 			&:first-child {
 				padding-left: 0px;
 				border-left: 0px;
 			}
 		}
 	}
+
 	.deleteIcon {
 		display: flex;
 		flex: 1;
@@ -414,13 +421,16 @@ const addStaticText = (event) => {
 <style lang="scss" deep>
 .preview {
 	flex: 50%;
+
 	.barcode {
 		text-align: right;
 	}
+
 	.print-qrcode {
 		max-width: 120px;
 		max-height: 120px;
 	}
+
 	.fallback-barcode {
 		width: 100%;
 		user-select: none;
@@ -429,6 +439,7 @@ const addStaticText = (event) => {
 		align-items: center;
 		justify-content: center;
 		background-color: var(--subtle-fg);
+
 		.content {
 			display: flex;
 			flex-direction: column;

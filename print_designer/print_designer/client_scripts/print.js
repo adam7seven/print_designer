@@ -10,11 +10,11 @@ frappe.pages["print"].on_page_load = function (wrapper) {
 	$(wrapper).bind("show", () => {
 		const route = frappe.get_route();
 		const doctype = route[1];
-		const docname = route.slice(2).join("/");
+		const docid = route.slice(2).join("/");
 		if (!frappe.route_options || !frappe.route_options.frm) {
-			frappe.model.with_doc(doctype, docname, () => {
-				let frm = { doctype: doctype, docname: docname };
-				frm.doc = frappe.get_doc(doctype, docname);
+			frappe.model.with_doc(doctype, docid, () => {
+				let frm = { doctype: doctype, docid: docid };
+				frm.doc = frappe.get_doc(doctype, docid);
 				frappe.model.with_doctype(doctype, () => {
 					frm.meta = frappe.get_meta(route[1]);
 					print_view.show(frm);
@@ -127,7 +127,7 @@ frappe.ui.form.PrintView = class PrintView extends frappe.ui.form.PrintView {
 		canvasContainer.innerHTML = `${frappe.render_template("print_skeleton_loading")}`;
 		let params = new URLSearchParams({
 			doctype: this.frm.doc.doctype,
-			name: this.frm.doc.name,
+			id: this.frm.doc.id,
 			format: this.selected_format(),
 			_lang: this.lang_code,
 		});

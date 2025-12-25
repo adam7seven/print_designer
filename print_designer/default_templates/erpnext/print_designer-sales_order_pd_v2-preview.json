@@ -1,7 +1,7 @@
 {
  "attached_to_doctype": "Print Format",
  "attached_to_field": "print_designer_preview_img",
- "attached_to_name": "Sales Order PD v2",
+ "attached_to_id": "Sales Order PD v2",
  "content_hash": "e5986e82c0d55483cd7b98c6713f12d3",
  "creation": "2024-05-05 23:13:14.641285",
  "docstatus": 0,
@@ -18,7 +18,7 @@
  "is_private": 1,
  "modified": "2024-05-05 23:13:14.641285",
  "modified_by": "Administrator",
- "name": "7f0092ceff",
+ "id": "7f0092ceff",
  "owner": "Administrator",
  "uploaded_to_dropbox": 0,
  "uploaded_to_google_drive": 0

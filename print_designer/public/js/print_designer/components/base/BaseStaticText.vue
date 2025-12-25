@@ -129,7 +129,7 @@ watch(
 					args: {
 						string: content.value,
 						doctype: MainStore.doctype,
-						docname: MainStore.currentDoc,
+						docid: MainStore.currentDoc,
 						send_to_jinja: MainStore.mainParsedJinjaData || {},
 					},
 				});
@@ -242,9 +242,11 @@ const handleFocus = (e) => {
 	outline: none;
 	min-width: 1px;
 }
+
 [contenteditable]:empty:before {
 	content: attr(data-placeholder);
 }
+
 [contenteditable]:empty:focus:before {
 	content: "";
 }

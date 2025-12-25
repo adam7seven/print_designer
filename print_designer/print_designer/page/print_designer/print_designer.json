@@ -8,7 +8,7 @@
  "modified": "2023-04-05 10:38:00.761959",
  "modified_by": "Administrator",
  "module": "Print Designer",
- "name": "print-designer",
+ "id": "print-designer",
  "owner": "Administrator",
  "page_name": "print-designer",
  "roles": [
